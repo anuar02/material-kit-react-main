@@ -19,6 +19,8 @@ root.render(
   </HelmetProvider>
 );
 
+
+
 // If you want to enable client cache, register instead.
 serviceWorker.unregister();
 

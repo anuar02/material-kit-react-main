@@ -17,20 +17,10 @@ const navConfig = [
     icon: icon('ic_user'),
   },
   {
-    title: 'Поля',
+    title: 'Продукты',
     path: '/dashboard/products',
     icon: icon('ic_cart'),
-  },
-  {
-    title: 'авторизоваться',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Не найдено',
-    path: '/404',
-    icon: icon('ic_disabled'),
-  },
+  }
 ];
 
 export default navConfig;
