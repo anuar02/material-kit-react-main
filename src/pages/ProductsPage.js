@@ -99,10 +99,11 @@ export default function ProductsPage() {
             aria-describedby="modal-modal-description"
         >
           <Box sx={{ ...style, width: 400 }}>
+            <h2>Добавить продукт</h2>
             <TextField
                 fullWidth
                 sx={inputStyle}
-                label="Category"
+                label="Категория"
                 name="title"
                 value={createProduct?.title}
                 onChange={handleChange}
@@ -110,14 +111,14 @@ export default function ProductsPage() {
             <TextField
                 fullWidth
                 sx={inputStyle}
-                label="Name"
+                label="Название"
                 name="name"
                 value={createProduct?.name}
                 onChange={handleChange}
             />
             <TextField
                 fullWidth
-                label="Image URL"
+                label="Ссылка на изображение"
                 sx={inputStyle}
                 name="imageUrl"
                 value={createProduct?.imageUrl}
@@ -126,7 +127,7 @@ export default function ProductsPage() {
             <TextField
                 fullWidth
                 sx={inputStyle}
-                label="Price"
+                label="Цена"
                 name="price"
                 value={createProduct?.city}
                 onChange={handleChange}

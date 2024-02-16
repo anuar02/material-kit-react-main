@@ -38,34 +38,32 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Футбольное поле" total={123000} icon={'ion:football'} />
+            <AppWidgetSummary title="Верхняя одежда" total={123000} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Теннисный корт" total={132831} color="info" icon={'ph:tennis-ball-fill'} />
+            <AppWidgetSummary title="Костюмы" total={132831} color="info"  />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
-              title="Настольный теннис"
+              title="Обувь"
               total={173315}
               color="warning"
-              icon={'fa6-solid:table-tennis-paddle-ball'}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
-              title="Баскетбольный корт"
+              title="Шапки"
               total={12234}
               color="error"
-              icon={'material-symbols:sports-basketball'}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Посетители"
+              title="Покупатели"
               subheader="(+43%) больше чем в прошлом году"
               chartLabels={[
                 '01/01/2003',
@@ -105,12 +103,12 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Сегодня посетили"
+              title="Количество товара по категориям"
               chartData={[
-                { label: 'Футбол', value: 13 },
-                { label: 'Теннис', value: 8 },
-                { label: 'Настольный теннис', value: 32 },
-                { label: 'Баскетбол', value: 5 },
+                { label: 'Костюмы', value: 13 },
+                { label: 'Шапки', value: 8 },
+                { label: 'Верхняя одежда', value: 32 },
+                { label: 'Обувь', value: 5 },
               ]}
               chartColors={[
                 theme.palette.primary.main,
@@ -172,10 +170,10 @@ export default function DashboardAppPage() {
             <AppTasks
               title="Задачи"
               list={[
-                { id: '1', label: 'Закупить новые мячи' },
-                { id: '2', label: 'Закупить свистки' },
-                { id: '3', label: 'Закупить газон' },
-                { id: '4', label: 'Починить баскетбольное кольцо' },
+                { id: '1', label: 'Открыть новую точку' },
+                { id: '2', label: 'Нанять больше сотрудников' },
+                { id: '3', label: 'Заказы с Европы' },
+                { id: '4', label: 'Закупить рекламы' },
               ]}
             />
           </Grid>

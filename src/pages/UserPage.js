@@ -20,7 +20,7 @@ import {
   Typography,
   IconButton,
   TableContainer,
-  TablePagination, Modal, Box, TextField, DialogActions,
+  TablePagination, Modal, Box, TextField, DialogActions, Select, InputLabel, Chip,
 } from '@mui/material';
 // components
 import Label from '../components/label';
@@ -31,15 +31,16 @@ import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import {createUser, handleUpdate, removeUser} from "../api/users";
 import EditUserForm from "../components/create/CreateUser";
+import EditModal from "./EditModal";
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
+  { id: 'name', label: 'ФИО', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'city', label: 'City', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'role', label: 'Роль', alignRight: false },
+  { id: 'city', label: 'Город', alignRight: false },
+  { id: 'status', label: 'Статус', alignRight: false },
 ];
 
 
@@ -101,6 +102,9 @@ export default function UserPage() {
 
   const [editUserForm, setEditUserForm] = useState(false)
 
+  const [edit, setEdit] = useState(false)
+
+
   const handleEdit = (user) => {
     setEditUserForm(true)
     setEditUser(user);
@@ -109,6 +113,11 @@ export default function UserPage() {
   const handleEditClose = () => {
     setEditUserForm(false);
   };
+
+  const handleCloseEditModal = () => {
+    setEdit(false)
+    document.location.reload();
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -144,6 +153,10 @@ export default function UserPage() {
   const handleCloseMenu = () => {
     setOpen(null);
   };
+
+  const handleEditButton = () => {
+    setEdit(true)
+  }
 
   const handleDelete = () => {
     const id = deleteId
@@ -274,7 +287,7 @@ export default function UserPage() {
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id, data } = row;
-                    const { displayName, email, position, id_, city } = data;
+                    const { displayName, email, position, id_, city, status } = data;
                     const selectedUser = selected.indexOf(id) !== -1
 
                     return (
@@ -293,7 +306,26 @@ export default function UserPage() {
                           <TableCell align="left">{email}</TableCell>
                           <TableCell align="left">{position}</TableCell>
                           <TableCell align="left">{city}</TableCell>
-                          <TableCell align="right">
+                          <TableCell align="left">
+                            {status === 'not_verified' ? (
+                                <Chip
+                                    color="error"
+                                    disabled={false}
+                                    size="medium"
+                                    variant="elevated"
+                                    label={status}
+                                />
+                            ) : (
+                                <Chip
+                                    color="info"
+                                    disabled={false}
+                                    size="medium"
+                                    variant="elevated"
+                                    label={status}
+                                />
+                            )}
+                          </TableCell>
+                            <TableCell align="right">
                             <IconButton size="large" color="inherit" onClick={(event) => handleOpenMenu(event, id, row)}>
                               <Iconify icon={'eva:more-vertical-fill'} />
                             </IconButton>
@@ -353,6 +385,8 @@ export default function UserPage() {
           aria-describedby="modal-modal-description"
       >
         <Box sx={{ ...style, width: 400 }}>
+          <h2>Create User</h2>
+
           <TextField
               fullWidth
               sx={inputStyle}
@@ -385,12 +419,26 @@ export default function UserPage() {
               value={editUser?.city}
               onChange={handleChange}
           />
+          <InputLabel id="select-label">Select Option</InputLabel>
+          <Select
+              labelId="select-label"
+              id="select"
+              fullWidth
+              name="status"
+              sx={inputStyle}
+              value={editUser?.status}
+              onChange={handleChange}
+          >
+            <MenuItem value="verified">Verified</MenuItem>
+            <MenuItem value="not_verified">Not Verified</MenuItem>
+          </Select>
           <DialogActions>
             <Button onClick={handleEditClose}>Cancel</Button>
             <Button onClick={handleSaveEdit}>Save</Button>
           </DialogActions>
         </Box>
       </Modal>
+      <EditModal open={edit} userData={editUser} onClose={handleCloseEditModal} id={deleteId}/>
       <Popover
         open={Boolean(open)}
         anchorEl={open}
@@ -412,6 +460,10 @@ export default function UserPage() {
         <MenuItem sx={{ color: 'error.main' }} onClick={() => handleDelete()}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
           Delete
+        </MenuItem>
+        <MenuItem sx={{ color: 'edit.main' }} onClick={() => handleEditButton()}>
+          <Iconify icon={'eva:edit-2-outline'} sx={{ mr: 2 }} />
+          Edit
         </MenuItem>
       </Popover>
     </>

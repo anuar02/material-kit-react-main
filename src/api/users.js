@@ -89,3 +89,27 @@ export const createProductSend = async (product) => {
         throw error; // Rethrow the error to handle it in the calling code
     }
 };
+
+export const updateUser = async (userId, newData) => {
+    try {
+        const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newData),
+        });
+
+        if (!response.ok) {
+            // Handle error response from server
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to update user');
+        }
+
+        const responseData = await response.json();
+        console.log(responseData.message); // Log success message
+    } catch (error) {
+        console.error('Error updating user:', error.message);
+        // Handle error in UI or inform the user
+    }
+};
