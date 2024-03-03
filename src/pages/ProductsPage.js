@@ -58,6 +58,7 @@ export default function ProductsPage() {
         .catch((error) => {
           console.error('Error editing user:', error);
         });
+    document.window.reload()
   };
 
   const handleEditClose = () => {

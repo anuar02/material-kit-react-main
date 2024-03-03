@@ -1,3 +1,4 @@
+import {useEffect, useState} from "react";
 import { FaBeer } from 'react-icons/fa';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
@@ -5,8 +6,8 @@ import { faker } from '@faker-js/faker';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
-import Iconify from '../components/iconify';
 
+import Iconify from '../components/iconify';
 // sections
 import {
   AppTasks,
@@ -24,6 +25,26 @@ import {
 
 export default function DashboardAppPage() {
   const theme = useTheme();
+  const [categories, setCategories] = useState('')
+
+    useEffect(() => {
+        const fetchCategoriesCount = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/categories');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch categories');
+
+                }
+
+                const data = await response.json();
+                setCategories(data.slice(0, 4));
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategoriesCount();
+    }, []);
 
   return (
     <>
@@ -37,46 +58,37 @@ export default function DashboardAppPage() {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Верхняя одежда" total={123000} />
-          </Grid>
+            {categories && categories.map((category, index) => (
+                <Grid item key={index} xs={12} sm={6} md={3}>
+                    {/* Accessing keys and values of each category object */}
+                    {Object.entries(category).map(([key, value]) => (
+                        // Assuming 'icon' key contains the icon name
+                        key === 'icon' ? null : (
+                            <AppWidgetSummary key={key} title={key} total={value} icon={category.icon} />
+                        )
+                    ))}
+                </Grid>
+            ))}
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Костюмы" total={132831} color="info"  />
-          </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary
-              title="Обувь"
-              total={173315}
-              color="warning"
-            />
-          </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary
-              title="Шапки"
-              total={12234}
-              color="error"
-            />
-          </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
               title="Покупатели"
               subheader="(+43%) больше чем в прошлом году"
               chartLabels={[
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
+                '05/01/2023',
+                '06/01/2023',
+                '07/01/2023',
+                '08/01/2023',
+                '09/01/2023',
+                '10/01/2023',
+                '11/01/2023',
+                '12/01/2023',
+                '01/01/2024',
+                '02/01/2024',
+                '03/01/2024',
               ]}
               chartData={[
                 {
@@ -107,8 +119,8 @@ export default function DashboardAppPage() {
               chartData={[
                 { label: 'Костюмы', value: 13 },
                 { label: 'Шапки', value: 8 },
-                { label: 'Верхняя одежда', value: 32 },
-                { label: 'Обувь', value: 5 },
+                { label: 'Для женщин', value: 32 },
+                { label: 'Кроссовки', value: 5 },
               ]}
               chartColors={[
                 theme.palette.primary.main,

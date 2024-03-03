@@ -35,6 +35,9 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // console.log(searchParams.get(), ' lkol')
+
   return (
     <>
       <IconButton

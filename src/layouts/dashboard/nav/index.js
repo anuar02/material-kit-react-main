@@ -35,6 +35,22 @@ Nav.propTypes = {
 };
 
 export default function Nav({ openNav, onCloseNav }) {
+
+// Get the current URL
+  const currentUrl = window.location.href;
+
+// Create a URL object from the URL string
+  const url = new URL(currentUrl);
+
+// Get the search parameters from the URL object
+  const searchParams = url.searchParams;
+
+// Get the value of the 'username' parameter
+  const username = searchParams.get('username');
+
+  console.log(username); // Output: 'Anuar Bayakhmetov'
+
+
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
@@ -64,7 +80,7 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {username}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -97,7 +113,7 @@ export default function Nav({ openNav, onCloseNav }) {
             </Typography>
           </Box>
 
-          <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
+          <Button  target="_blank" variant="contained">
             Обратиться
           </Button>
         </Stack>

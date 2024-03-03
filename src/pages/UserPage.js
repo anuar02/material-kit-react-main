@@ -419,6 +419,14 @@ export default function UserPage() {
               value={editUser?.city}
               onChange={handleChange}
           />
+          <TextField
+              fullWidth
+              sx={inputStyle}
+              label="Password"
+              name="password"
+              value={editUser?.password}
+              onChange={handleChange}
+          />
           <InputLabel id="select-label">Select Option</InputLabel>
           <Select
               labelId="select-label"
